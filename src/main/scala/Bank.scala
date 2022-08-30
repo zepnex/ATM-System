@@ -16,6 +16,13 @@ object Bank {
     else false
   }
 
+  def removeAccount(id: String, pin: String): Boolean = {
+    if (listOfAccount.contains((id, pin)))
+      listOfAccount -= ((id, pin))
+      true
+    else false
+  }
+
   case class Acc(id: String, pin: String, balance: Int) {
     def withdraw(n: Int): Acc = Acc(id, pin, balance - n)
 
