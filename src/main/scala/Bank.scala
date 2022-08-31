@@ -24,9 +24,22 @@ object Bank {
   }
 
   case class Acc(id: String, pin: String, balance: Int) {
-    def withdraw(n: Int): Acc = Acc(id, pin, balance - n)
+    def withdraw(n: Int): Option[Acc] = {
+      listOfAccount((id, pin)) = Acc(id, pin, balance - n)
+      listOfAccount.get((id, pin))
+    }
 
-    def deposit(n: Int): Acc = Acc(id, pin, balance + n)
+    def deposit(n: Int): Option[Acc] = {
+      listOfAccount((id, pin)) = Acc(id, pin, balance + n)
+      listOfAccount.get((id, pin))
+    }
+
+    def changePin(newPin: String): Option[Acc] = {
+      removeAccount(id, pin)
+      createAccount(id, newPin)
+      println(listOfAccount.get((id, newPin)).hashCode())
+      listOfAccount.get((id, newPin))
+    }
 
     def getBalance: Int = balance
   }
